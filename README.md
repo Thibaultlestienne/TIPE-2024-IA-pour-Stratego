@@ -32,3 +32,5 @@ Rend la méthode de Boer symetrique entre le côté droit et le côté gauche du
 
 #### V12
 Supprime l'aléatoire 
+
+Les IA V1, V10, V11 sont déja préformées et disponible dans l'archive ancienneformations.zip
