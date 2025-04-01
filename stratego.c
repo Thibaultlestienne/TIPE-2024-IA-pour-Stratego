@@ -680,6 +680,120 @@ int jouer_ia_contre_ia(ia ia1, ia ia2, int * nbtour) { // permet de jouer une pa
     return gagnant;
 }
 
+int jouer_humain_contre_ia(ia ia1, int * nbtour) { // permet de jouer une partie renvoie 0 si le premier joueur gagne 1 si le second joueur gagne
+    victoire = false;
+    gagnant = 2;
+
+    coup c;
+    coup ctmp;
+    plateau P;
+    int tour = 0;
+
+    coupMM cmm;
+
+    initialisation_plateau(&P);             // Initialise le plateau vide
+
+    tableau_dyn l_coups = tableau_dyn_initialisation(1);    // Initialisation de la liste des coups possibles
+    tableau_dyn coups_joues = tableau_dyn_initialisation(1);
+
+    piece **equipe0 = malloc(sizeof(piece*) * NBPIECES);
+    if (equipe0 == NULL) {
+        printf("Erreur d'allocation mémoire\n");
+        exit(1);
+    }
+    pseudo_alea(&P, 0, equipe0); // Place équipe 0
+    
+                        
+    piece **equipe1 = malloc(sizeof(piece*) * NBPIECES);  
+    if (equipe1 == NULL) {
+        printf("Erreur d'allocation mémoire\n");
+        exit(1);
+    }
+    pseudo_alea(&P, 1, equipe1);// Place équipe 1   
+    int e = 12;
+
+    /*
+    for (int i=0; i<NBPARAMETRES; i++) {
+        parametres[i] = generer_valeur_aleatoire_0_1();
+    }
+
+    printf(" Evaluation - %d -\n", evaluation( &P, equipe0, equipe1, , tour));
+    */
+    //for (int i = 0; i < NBPIECES ; i++){afficher_pion(equipe0[i]);}
+    //afficher_plateau(&P);
+    while( !victoire && tour<NBCOUPMAX) {
+        
+        liste_coup_possible(P, &l_coups, equipe0, equipe1, tour%2);
+        if (l_coups.nbelt == 0){
+            victoire = true;
+            gagnant = (tour+1) % 2;
+            //printf("plus de coup \n");
+            break;
+        }
+        //affiche_tableau_dyn(&l_coups); 
+
+        // fait jouer
+        
+        if (tour%2 == 0){
+            cmm.c = mouvement_joueur(&P, tour%2, tour); // Réalise le mouvement
+        }
+        else {
+            if (ia1.version >= 10 && ia1.version <=19){
+                cmm = MinMaxDeBoer(&P, ia1, tour, equipe0, equipe1);
+            }
+            else{
+                cmm = MinMax(&P, equipe0, equipe1, ia1, 1 , tour, PROFONDEUR_MIN_MAX); 
+            }
+            //afficher_coupMM(cmm);
+        }    
+
+        if ( coups_joues.nbelt < 8 ) {
+            tableau_dyn_ajoute( &coups_joues, cmm.c);
+        } else {
+            //printf(" nombre : %d ", coups_joues.nbelt);
+            for ( int i=0; i<7; i++) {
+                coups_joues.tab[i] = coups_joues.tab[i+1];
+            }
+            coups_joues.tab[7] = cmm.c;
+        }
+
+        if ( repetition(&coups_joues, action(&P, cmm.c, tour%2, false)) ) {
+            for (int i=0; i<1; i++) {
+                //printf(" NULLE par répétition ! \n");
+            };
+            break;
+        }
+
+        if ( true ) {
+            //affiche_tableau_dyn(&l_coups);
+            afficher_plateau(&P);
+        }
+
+        tour += 1; 
+        //printf("tour : %d \n\n", tour);                                               // Incrémente le nombre tour
+        //if (tour %100 == 0) { afficher_plateau(&P);}
+    };
+    //afficher_plateau(&P);
+    //if(tour == NBCOUPMAX){printf("nb tour epuisé");};
+    //afficher_plateau(&P);
+    //printf("tour %d eval : %lf", tour, evaluation(&P, equipe0, equipe1,ia_test,tour));
+    for (int i = 0 ; i < NBPIECES; i++){
+        if (equipe0[i] != NULL && equipe0[i]->cell == NULL){free(equipe0[i]);}
+        if (equipe1[i] != NULL && equipe1[i]->cell == NULL){free(equipe1[i]);}
+    }
+    free(equipe0);
+    free(equipe1);
+    //printf(" Nombre de coups : %d \n gagnant : %d \n", tour, gagnant);
+    tableau_dyn_supp(&l_coups);
+    tableau_dyn_supp(&coups_joues);
+    libere_plateau(&P);                      // Libère le plateau
+
+    if (nbtour != NULL)
+    {
+        *nbtour += tour;
+    }
+    return gagnant;
+}
 
 int jouer_ia_contre_random(ia ia1) { // permet de jouer une partie renvoie 0 si le premier joueur gagne 1 si le second joueur gagne
 

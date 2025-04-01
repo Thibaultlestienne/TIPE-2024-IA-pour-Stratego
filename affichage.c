@@ -137,3 +137,33 @@ void afficher_plateau_version_joueur(const plateau * jeu, int tour) { // Affiche
     }
     printf("\033[0m-------------------------"); if (AFFICHAGECOORDONNEES){printf("------------------------------------");} printf("\n");
 }
+
+void afficher_tableau(int tableau[], int taille) {// affiche un tableau en console
+    printf("[");
+    for (int i = 0; i < taille; i++) {
+        printf("%d", tableau[i]);
+        if (i < taille - 1) {
+            printf(", ");
+        }
+    }
+    printf("]\n");
+}
+
+void afficher_ia(ia ia_a_afficher){
+    printf("IA : \n");
+    printf("\t version : \t %d \n", ia_a_afficher.version);
+    printf("\t parametres : \t [");
+    for (int i = 0; i < NBPARAMETRES; i++) {
+        printf("%d %f\n", i, ia_a_afficher.parametres[i]);
+    }
+    printf("]\n");
+}
+
+void afficher_tableau_ia(ia* tableau, int taille) {// affiche un tableau d ia en console
+    printf("[\n");
+    for (int i = 0; i < taille; i++) {
+        afficher_ia(tableau[i]);
+        printf("\n\n");
+    }
+    printf("]\n");
+}

@@ -102,6 +102,9 @@ int jouer();
 
 int jouer_ia_contre_ia(ia ia1, ia ia2, int * nbtour);
 
+int jouer_humain_contre_ia(ia ia1, int * nbtour);
+
+
 int jouer_ia_contre_random(ia ia1);
 
 

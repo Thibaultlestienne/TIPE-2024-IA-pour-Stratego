@@ -26,16 +26,16 @@ def extraire_donnees(chemin_fichier):
                     generation_donnees['temps_de_formation'] = temps
                 elif 'nombre de victoire' in ligne:
                     victoires = int(ligne.split(':')[-1].strip())
-                    generation_donnees['nombre_de_victoire'] = victoires
-                elif "nombre d'égalité" in ligne:
+                    generation_donnees['nombre_de_victoires'] = victoires
+                elif "nombre d'égalités" in ligne:
                     egalites = int(ligne.split(':')[-1].strip())
-                    generation_donnees['nombre_d_égalité'] = egalites
+                    generation_donnees['nombre_d_égalités'] = egalites
                 elif 'nombre de coup moyen' in ligne:
                     nombre_de_coups_moyens = int(ligne.split(':')[-1].strip())
-                    generation_donnees['nombre_de_coup_moyen'] = nombre_de_coups_moyens
+                    generation_donnees['nombre_de_coups_moyens'] = nombre_de_coups_moyens
                 elif 'nombre de famille differentes' in ligne:
                     familles = int(ligne.split(':')[-1].strip())
-                    generation_donnees['nombre_de_famille_differentes'] = familles
+                    generation_donnees['nombre_de_familles_differentes'] = familles
             # print(generation_donnees)
             generations.append(generation_donnees)
 
@@ -53,8 +53,8 @@ generations_donnees = extraire_donnees(chemin_fichier)
 
 # Tracer le nombre de victoires par génération
 plt.figure(figsize=(10, 6))
-plt.plot([gen_donnees['nombre_de_victoire'] for gen_donnees in generations_donnees], marker='o', label='Nombre de victoires')
-plt.plot(moyenne_glissante([gen_donnees['nombre_de_victoire'] for gen_donnees in generations_donnees], taille_fenetre_glissante), marker='x', label=f'Moyenne glissante sur {taille_fenetre_glissante} éléments')
+plt.plot([gen_donnees['nombre_de_victoires'] for gen_donnees in generations_donnees], marker='o', label='Nombre de victoires')
+plt.plot(moyenne_glissante([gen_donnees['nombre_de_victoires'] for gen_donnees in generations_donnees], taille_fenetre_glissante), marker='x', label=f'Moyenne glissante sur {taille_fenetre_glissante} éléments')
 plt.xlabel('Génération')
 plt.ylabel('Nombre de victoires')
 plt.title('Nombre de victoires par génération')
@@ -64,8 +64,8 @@ plt.savefig('formation/graphiques/nombre_de_victoires.png')
 
 # Tracer le nombre de coups moyen par génération
 plt.figure(figsize=(10, 6))
-plt.plot([gen_donnees['nombre_de_coup_moyen'] for gen_donnees in generations_donnees], marker='o', label='Nombre de coups moyen')
-plt.plot(moyenne_glissante([gen_donnees['nombre_de_coup_moyen'] for gen_donnees in generations_donnees], taille_fenetre_glissante), marker='x', label=f'Moyenne glissante sur {taille_fenetre_glissante} éléments')
+plt.plot([gen_donnees['nombre_de_coups_moyens'] for gen_donnees in generations_donnees], marker='o', label='Nombre de coups moyen')
+plt.plot(moyenne_glissante([gen_donnees['nombre_de_coups_moyens'] for gen_donnees in generations_donnees], taille_fenetre_glissante), marker='x', label=f'Moyenne glissante sur {taille_fenetre_glissante} éléments')
 plt.xlabel('Génération')
 plt.ylabel('Nombre de coups moyen')
 plt.title('Nombre de coups moyen par génération')
@@ -75,8 +75,8 @@ plt.savefig('formation/graphiques/coups_moyen.png')
 
 # Tracer le nombre de familles différentes par génération
 plt.figure(figsize=(10, 6))
-plt.plot([gen_donnees['nombre_de_famille_differentes'] for gen_donnees in generations_donnees], marker='o', label='Nombre de familles différentes')
-plt.plot(moyenne_glissante([gen_donnees['nombre_de_famille_differentes'] for gen_donnees in generations_donnees], taille_fenetre_glissante), marker='x', label=f'Moyenne glissante sur {taille_fenetre_glissante} éléments')
+plt.plot([gen_donnees['nombre_de_familles_differentes'] for gen_donnees in generations_donnees], marker='o', label='Nombre de familles différentes')
+plt.plot(moyenne_glissante([gen_donnees['nombre_de_familles_differentes'] for gen_donnees in generations_donnees], taille_fenetre_glissante), marker='x', label=f'Moyenne glissante sur {taille_fenetre_glissante} éléments')
 plt.xlabel('Génération')
 plt.ylabel('Nombre de familles différentes')
 plt.title('Nombre de familles différentes par génération')

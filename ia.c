@@ -16,7 +16,7 @@ int nombre_familles_differentes(const ia tableau_famille[NBSURVIVANTS]){
    for (int i = 0; i < nbr; i++) {
       for (int j = i + 1; j < nbr;) {
          if (tab[j] == tab[i]) {
-            for (int k = j; k < nbr; k++) {
+            for (int k = j; k < nbr-1; k++) {
                tab[k] = tab[k + 1];
             }
             nbr--;
