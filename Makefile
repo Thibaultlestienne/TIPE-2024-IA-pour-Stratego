@@ -17,7 +17,7 @@ compiler_ia_avec_verification_memoire:
 
 # Permet de add commit et push avec un message par default
 partager : 
-	rm ia
+	rm -f ia
 	sh partager.sh		
 
 
