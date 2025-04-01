@@ -17,7 +17,7 @@ compiler_ia_avec_verification_memoire:
 
 # Permet de add commit et push avec un message par default
 partager : 
-	rm -f formation/*/* formation/sortie.txt formation/tableau.csv ia
+	rm ia
 	sh partager.sh		
 
 
