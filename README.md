@@ -2,6 +2,8 @@
 
 L'objectif de ce TIPE est de créer une inteligence artificielle pour le jeu du Stratego. 
 
+[présentation et règles du jeu](http://jeuxstrategie.free.fr/Stratego_complet.php)
+
 ## Pour lancer une formation
 - les principaux paramètres modifiables sont au début de ia.h.
 - lancer la commande make former
